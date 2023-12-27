@@ -11,9 +11,13 @@ import MenuItem from "@mui/material/MenuItem";
 import Toolbar from "@mui/material/Toolbar";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
+import { signOut } from "firebase/auth";
 import * as React from "react";
-import logo from "../assets/img/logo.png";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import logo from "../assets/img/logo.png";
+import { userloggedOut } from "../features/auth/authSlice";
+import { auth } from "../firebase/firebase.init";
 
 const pages = [{ title: "Leader Board", url: "leaderboard" }];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
@@ -21,6 +25,7 @@ const settings = ["Profile", "Account", "Dashboard", "Logout"];
 function Nav() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const dispatch = useDispatch();
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -35,6 +40,14 @@ function Nav() {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+  };
+
+  // ui actions
+
+  const logOut = () => {
+    signOut(auth).then(() => {
+      dispatch(userloggedOut());
+    });
   };
 
   return (
@@ -155,7 +168,12 @@ function Nav() {
             >
               {settings.map((setting) => (
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
+                  <Typography
+                    textAlign="center"
+                    onClick={setting === "Logout" && logOut}
+                  >
+                    {setting}
+                  </Typography>
                 </MenuItem>
               ))}
             </Menu>

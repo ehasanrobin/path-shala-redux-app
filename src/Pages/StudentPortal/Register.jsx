@@ -1,20 +1,50 @@
 import { Button, TextField } from "@mui/material";
-import React from "react";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import banner from "../../assets/img/login-banner.jpg";
 import logo from "../../assets/img/logo.png";
-const register = () => {
+import { userloggedin } from "../../features/auth/authSlice";
+import { auth } from "../../firebase/firebase.init";
+const Register = () => {
+  const [email, setemail] = useState("");
+  const [password, setpassword] = useState("");
+  const [displayName, setdisplayName] = useState("");
+  const dispatch = useDispatch();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Signed up
+        const user = userCredential.user;
+        updateProfile(auth.currentUser, { displayName }).catch((err) =>
+          console.log(err)
+        );
+        dispatch(userloggedin(auth.currentUser));
+        // ...
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorMessage, errorCode, email, password);
+        // ..
+      });
+  };
   return (
     <div className="md:flex">
       <div className="md:w-6/12 flex min-h-screen align-middle justify-center  flex-col ">
         <div className="form-box w-full flex justify-center align-middle flex-col">
           <img src={logo} className="w-2/6 m-auto" alt="" />
-          <form action="" className="w-2/4 m-auto  p-3 shadow-lg">
+          <form onSubmit={handleSubmit} className="w-2/4 m-auto  p-3 shadow-lg">
             <h1 className="font-bold text-4xl text-center">Login</h1>
             <div className="form-group mb-4 w-full">
               <TextField
                 id="standard-basic"
                 className="w-full"
+                value={displayName}
+                onChange={(e) => setdisplayName(e.target.value)}
                 color="secondary"
                 label="Name"
                 variant="standard"
@@ -24,6 +54,8 @@ const register = () => {
               <TextField
                 id="standard-basic"
                 className="w-full"
+                value={email}
+                onChange={(e) => setemail(e.target.value)}
                 color="secondary"
                 label="Email"
                 variant="standard"
@@ -33,6 +65,8 @@ const register = () => {
               <TextField
                 id="standard-basic"
                 className="w-full"
+                value={password}
+                onChange={(e) => setpassword(e.target.value)}
                 color="secondary"
                 type="password"
                 label="Passowrd"
@@ -64,4 +98,4 @@ const register = () => {
   );
 };
 
-export default register;
+export default Register;

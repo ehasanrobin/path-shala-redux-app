@@ -49,7 +49,7 @@ const Player = () => {
   const handleClose = () => setOpen(false);
 
   return (
-    <div className="container">
+    <div className="w-full">
       <Nav></Nav>
       <div className="md:flex  items-start justify-center ">
         <div className="w-4/5 mt-4 shadow-sm flex flex-col items-center">
