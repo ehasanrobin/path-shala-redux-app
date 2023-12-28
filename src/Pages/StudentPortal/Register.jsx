@@ -5,8 +5,8 @@ import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import banner from "../../assets/img/login-banner.jpg";
 import logo from "../../assets/img/logo.png";
-import { userloggedin } from "../../features/auth/authSlice";
 import { auth } from "../../firebase/firebase.init";
+import { userloggedin } from "../../features/auth/authSlice";
 const Register = () => {
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
@@ -16,13 +16,23 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     await createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
+      .then(async (userCredential) => {
         // Signed up
-        const user = userCredential.user;
-        updateProfile(auth.currentUser, { displayName }).catch((err) =>
+        await updateProfile(auth.currentUser, { displayName }).catch((err) =>
           console.log(err)
         );
-        dispatch(userloggedin(auth.currentUser));
+        const accessToken = userCredential.user.accessToken;
+        dispatch(
+          userloggedin({
+            accessToken,
+            user: {
+              uid: userCredential.user.uid,
+              email: userCredential.user.email,
+              displayName: userCredential.user.displayName,
+              photoURL: userCredential.user.photoURL,
+            },
+          })
+        );
         // ...
       })
       .catch((error) => {
@@ -38,7 +48,7 @@ const Register = () => {
         <div className="form-box w-full flex justify-center align-middle flex-col">
           <img src={logo} className="w-2/6 m-auto" alt="" />
           <form onSubmit={handleSubmit} className="w-2/4 m-auto  p-3 shadow-lg">
-            <h1 className="font-bold text-4xl text-center">Login</h1>
+            <h1 className="font-bold text-4xl text-center">Register</h1>
             <div className="form-group mb-4 w-full">
               <TextField
                 id="standard-basic"
@@ -85,7 +95,7 @@ const Register = () => {
                 className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"
                 size="large"
               >
-                Login
+                Register
               </Button>
             </div>
           </form>

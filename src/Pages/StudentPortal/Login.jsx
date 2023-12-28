@@ -1,27 +1,43 @@
+import GoogleIcon from "@mui/icons-material/Google";
 import { Button, TextField } from "@mui/material";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import {
+  GoogleAuthProvider,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+} from "firebase/auth";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import banner from "../../assets/img/login-banner.jpg";
 import logo from "../../assets/img/logo.png";
+import Error from "../../components/Error";
 import { userloggedin } from "../../features/auth/authSlice";
 import { auth } from "../../firebase/firebase.init";
-import Error from "../../components/Error";
 const Login = () => {
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const googleProvider = new GoogleAuthProvider();
+
   const handlesubmit = (e) => {
     e.preventDefault();
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        // Signed up
-        const user = userCredential.user.providerData[0];
+        // Signed in
         const accessToken = userCredential.user.accessToken;
-        dispatch(userloggedin({ accessToken, user }));
+        dispatch(
+          userloggedin({
+            accessToken,
+            user: {
+              uid: userCredential.user.uid,
+              email: userCredential.user.email,
+              displayName: userCredential.user.displayName,
+              photoURL: userCredential.user.photoURL,
+            },
+          })
+        );
 
         // ...
       })
@@ -30,6 +46,38 @@ const Login = () => {
         const errorMessage = error.message;
         setError("Email or password is incorrect");
         // ..
+      });
+    // dispatch(loggedinasync({ email, password }));
+  };
+  const handleGoogleLogin = () => {
+    signInWithPopup(auth, googleProvider)
+      .then((result) => {
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const accessToken = credential.accessToken;
+        console.log(result);
+        dispatch(
+          userloggedin({
+            accessToken,
+            user: {
+              uid: result.user.uid,
+              email: result.user.email,
+              displayName: result.user.displayName,
+              photoURL: result.user.photoURL,
+            },
+          })
+        );
+        // ...
+      })
+      .catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // The email of the user's account used.
+        const email = error.customData.email;
+        // The AuthCredential type that was used.
+        const credential = GoogleAuthProvider.credentialFromError(error);
+        // ...
       });
   };
   return (
@@ -78,6 +126,16 @@ const Login = () => {
               >
                 Login
               </Button>
+            </div>
+            <div>
+              <h3 className="text-xl font-bold">Login with</h3>
+              <button
+                onClick={handleGoogleLogin}
+                type="button"
+                className="border p-3 rounded-full mt-3 text-amber-400"
+              >
+                <GoogleIcon></GoogleIcon>
+              </button>
             </div>
             {error !== "" && <Error text={error}></Error>}
           </form>

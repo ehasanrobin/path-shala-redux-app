@@ -13,7 +13,7 @@ import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import { signOut } from "firebase/auth";
 import * as React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import logo from "../assets/img/logo.png";
 import { userloggedOut } from "../features/auth/authSlice";
@@ -25,6 +25,7 @@ const settings = ["Profile", "Account", "Dashboard", "Logout"];
 function Nav() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const loggedinUser = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
   const handleOpenNavMenu = (event) => {
@@ -43,8 +44,8 @@ function Nav() {
   };
 
   // ui actions
-
   const logOut = () => {
+    console.log("logout");
     signOut(auth).then(() => {
       dispatch(userloggedOut());
     });
@@ -143,11 +144,20 @@ function Nav() {
               </Button>
             ))}
           </Box>
-          <h3 className="capitalize p-2">ehasan robin</h3>
+          <h3 className="capitalize p-2">
+            {loggedinUser?.user?.displayName && loggedinUser.user.displayName}
+          </h3>
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <Avatar
+                  alt="Remy Sharp"
+                  src={
+                    loggedinUser.user?.photoURL
+                      ? loggedinUser.user.photoURL
+                      : ""
+                  }
+                />
               </IconButton>
             </Tooltip>
             <Menu
