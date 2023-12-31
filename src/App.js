@@ -34,7 +34,7 @@ function App() {
           }
         ></Route>
         <Route
-          path="/player"
+          path="/player/:videoId"
           element={
             <PrivateRoute>
               <Player />

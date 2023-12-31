@@ -11,6 +11,7 @@ import React from "react";
 import { useGetVideosQuery } from "../features/videos/videosAPI";
 import Error from "./Error";
 import Loading from "./Loading";
+import { Link } from "react-router-dom";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -47,17 +48,19 @@ const VideosList = () => {
     content = <div>No videos Found</div>;
   } else if (!isLoading && !isError && videos.length > 0) {
     content = videos.map((video) => (
-      <ListItem>
-        <ListItemAvatar>
-          <Avatar>
-            <NotStartedIcon />
-          </Avatar>
-        </ListItemAvatar>
-        <ListItemText
-          primary={video.title}
-          secondary={secondary ? "Secondary text" : null}
-        />
-      </ListItem>
+      <Link to={`/player/${video.id}`}>
+        <ListItem>
+          <ListItemAvatar>
+            <Avatar>
+              <NotStartedIcon />
+            </Avatar>
+          </ListItemAvatar>
+          <ListItemText
+            primary={video.title}
+            secondary={secondary ? "Secondary text" : null}
+          />
+        </ListItem>
+      </Link>
     ));
   }
   return <>{content}</>;

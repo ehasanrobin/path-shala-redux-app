@@ -1,17 +1,13 @@
-import NotStartedIcon from "@mui/icons-material/NotStarted";
-import { Box, Button, Divider, FormGroup, Modal, Paper } from "@mui/material";
-import Avatar from "@mui/material/Avatar";
+import { Box, Button, Divider, Modal, Paper } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemAvatar from "@mui/material/ListItemAvatar";
-import ListItemText from "@mui/material/ListItemText";
 import { styled } from "@mui/material/styles";
 import * as React from "react";
+import { useParams } from "react-router-dom";
 import Nav from "../../components/Nav";
-import { useGetVideosQuery } from "../../features/videos/videosAPI";
-import VideosList from "../../components/VideosList";
 import QuizzersForm from "../../components/QuizzersForm";
+import VideosList from "../../components/VideosList";
+import { useGetVideoQuery } from "../../features/videos/videosAPI";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -50,6 +46,9 @@ const Player = () => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const { videoId } = useParams();
+  const { data: video } = useGetVideoQuery(videoId);
+  console.log(videoId);
 
   return (
     <div className="w-full">
@@ -58,7 +57,7 @@ const Player = () => {
         <div className="w-4/5 mt-4 shadow-sm flex flex-col items-center">
           <iframe
             className="w-4/5 min-h-96 object-cover"
-            src="https://www.youtube.com/embed/Xoz31I1FuiY?list=PLcAkee8bm4CbPe-5Em2QS5IM9NwZnOJHE"
+            src={video?.url}
             title="Learn Material UI in One Hour - React Material UI Project Tutorial [2022]"
             frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -83,14 +82,8 @@ const Player = () => {
             </Button>
 
             <Divider variant="middle" />
-            <h1 className="text-4xl font-bold video-title">video title</h1>
-            <p className="video-description">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Et
-              doloremque magni ex non minus incidunt officiis modi voluptates
-              aliquid. Voluptates est expedita sint eius repellat commodi, unde
-              ipsum numquam natus, fugiat, reprehenderit dolore perferendis enim
-              magnam necessitatibus iste nulla quam.
-            </p>
+            <h1 className="text-4xl font-bold video-title">{video?.title}</h1>
+            <p className="video-description">{video?.description}</p>
           </div>
         </div>
         <div className="w-2/5">
@@ -115,7 +108,7 @@ const Player = () => {
         <Box sx={style}>
           <form action="">
             <h3 className="video-title font-bold">video title</h3>
-            <QuizzersForm></QuizzersForm>
+            <QuizzersForm videoId={videoId}></QuizzersForm>
           </form>
         </Box>
       </Modal>

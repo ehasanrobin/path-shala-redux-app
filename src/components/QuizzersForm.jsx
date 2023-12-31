@@ -4,8 +4,8 @@ import { useGetQuizzersQuery } from "../features/quizzers/quizzersAPI";
 import Error from "./Error";
 import Loading from "./Loading";
 
-const QuizzersForm = () => {
-  const { data: quizzers, isLoading, isError } = useGetQuizzersQuery(1);
+const QuizzersForm = ({ videoId }) => {
+  const { data: quizzers, isLoading, isError } = useGetQuizzersQuery(videoId);
   console.log(quizzers);
 
   let content;
