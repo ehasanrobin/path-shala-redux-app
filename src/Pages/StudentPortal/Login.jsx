@@ -1,17 +1,13 @@
 import GoogleIcon from "@mui/icons-material/Google";
 import { Button, TextField } from "@mui/material";
-import {
-  GoogleAuthProvider,
-  signInWithEmailAndPassword,
-  signInWithPopup,
-} from "firebase/auth";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import banner from "../../assets/img/login-banner.jpg";
 import logo from "../../assets/img/logo.png";
 import Error from "../../components/Error";
-import { userloggedin } from "../../features/auth/authSlice";
+import { loggedinasync, userloggedin } from "../../features/auth/authSlice";
 import { auth } from "../../firebase/firebase.init";
 const Login = () => {
   const [email, setemail] = useState("");
@@ -23,31 +19,31 @@ const Login = () => {
 
   const handlesubmit = (e) => {
     e.preventDefault();
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        // Signed in
-        const accessToken = userCredential.user.accessToken;
-        dispatch(
-          userloggedin({
-            accessToken,
-            user: {
-              uid: userCredential.user.uid,
-              email: userCredential.user.email,
-              displayName: userCredential.user.displayName,
-              photoURL: userCredential.user.photoURL,
-            },
-          })
-        );
+    // signInWithEmailAndPassword(auth, email, password)
+    //   .then((userCredential) => {
+    //     // Signed in
+    //     const accessToken = userCredential.user.accessToken;
+    //     dispatch(
+    //       userloggedin({
+    //         accessToken,
+    //         user: {
+    //           uid: userCredential.user.uid,
+    //           email: userCredential.user.email,
+    //           displayName: userCredential.user.displayName,
+    //           photoURL: userCredential.user.photoURL,
+    //         },
+    //       })
+    //     );
 
-        // ...
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        setError("Email or password is incorrect");
-        // ..
-      });
-    // dispatch(loggedinasync({ email, password }));
+    //     // ...
+    //   })
+    //   .catch((error) => {
+    //     const errorCode = error.code;
+    //     const errorMessage = error.message;
+    //     setError("Email or password is incorrect");
+    //     // ..
+    //   });
+    dispatch(loggedinasync({ email, password }));
   };
   const handleGoogleLogin = () => {
     signInWithPopup(auth, googleProvider)

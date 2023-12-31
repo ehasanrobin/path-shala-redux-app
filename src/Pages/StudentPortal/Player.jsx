@@ -9,6 +9,9 @@ import ListItemText from "@mui/material/ListItemText";
 import { styled } from "@mui/material/styles";
 import * as React from "react";
 import Nav from "../../components/Nav";
+import { useGetVideosQuery } from "../../features/videos/videosAPI";
+import VideosList from "../../components/VideosList";
+import QuizzersForm from "../../components/QuizzersForm";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -95,19 +98,7 @@ const Player = () => {
             <Grid item xs={12} md={12}>
               <Demo>
                 <List dense={dense} className="video-list">
-                  {generate(
-                    <ListItem>
-                      <ListItemAvatar>
-                        <Avatar>
-                          <NotStartedIcon />
-                        </Avatar>
-                      </ListItemAvatar>
-                      <ListItemText
-                        primary="Single-line item"
-                        secondary={secondary ? "Secondary text" : null}
-                      />
-                    </ListItem>
-                  )}
+                  {<VideosList></VideosList>}
                 </List>
               </Demo>
             </Grid>
@@ -124,57 +115,7 @@ const Player = () => {
         <Box sx={style}>
           <form action="">
             <h3 className="video-title font-bold">video title</h3>
-            <FormGroup>
-              <h3 className="text-2xl text-blue-600 capitalize">
-                quiestion one
-              </h3>
-              <div className="grid grid-cols-2 gap-3 mt-2">
-                <div className="w-full   ">
-                  <input
-                    type="checkbox"
-                    className="hidden clickInput"
-                    name=""
-                    id="ques1-q1"
-                  />
-                  <label htmlFor="ques1-q1" className="option-label">
-                    sdfsdfs
-                  </label>
-                </div>
-                <div className="w-full   ">
-                  <input
-                    type="checkbox"
-                    className="hidden clickInput"
-                    name=""
-                    id="ques1-q2"
-                  />
-                  <label htmlFor="ques1-q2" className="option-label">
-                    sdfsdfs
-                  </label>
-                </div>
-                <div className="w-full   ">
-                  <input
-                    type="checkbox"
-                    className="hidden clickInput"
-                    name=""
-                    id="ques1-q3"
-                  />
-                  <label htmlFor="ques1-q3" className="option-label">
-                    sdfsdfs
-                  </label>
-                </div>
-                <div className="w-full   ">
-                  <input
-                    type="checkbox"
-                    className="hidden clickInput"
-                    name=""
-                    id="ques1-q4"
-                  />
-                  <label htmlFor="ques1-q4" className="option-label">
-                    sdfsdfs
-                  </label>
-                </div>
-              </div>
-            </FormGroup>
+            <QuizzersForm></QuizzersForm>
           </form>
         </Box>
       </Modal>
