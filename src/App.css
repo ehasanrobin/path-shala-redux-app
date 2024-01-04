@@ -66,3 +66,12 @@ li.MuiListItem-root.MuiListItem-gutters.MuiListItem-padding.css-1p823my-MuiListI
 button.MuiButtonBase-root.MuiButton-root.MuiButton-text.MuiButton-textPrimary.MuiButton-sizeMedium.MuiButton-textSizeMedium.MuiButton-root.MuiButton-text.MuiButton-textPrimary.MuiButton-sizeMedium.MuiButton-textSizeMedium.css-1q39md6-MuiButtonBase-root-MuiButton-root:hover {
   background: #130f40 !important;
 }
+.playing {
+  background: #ddd;
+}
+.quizz-box {
+  border: 1px solid #ddd;
+  padding: 30px;
+  box-shadow: 1px 1px 1px 1px #ddd;
+  margin-bottom: 30px;
+}

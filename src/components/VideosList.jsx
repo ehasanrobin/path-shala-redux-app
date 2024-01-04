@@ -8,10 +8,10 @@ import {
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import React from "react";
+import { Link } from "react-router-dom";
 import { useGetVideosQuery } from "../features/videos/videosAPI";
 import Error from "./Error";
 import Loading from "./Loading";
-import { Link } from "react-router-dom";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -35,7 +35,7 @@ const Demo = styled("div")(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
 }));
 
-const VideosList = () => {
+const VideosList = ({ videoId }) => {
   const { data: videos, isLoading, isError } = useGetVideosQuery();
   const [secondary, setSecondary] = React.useState(false);
 
@@ -49,7 +49,7 @@ const VideosList = () => {
   } else if (!isLoading && !isError && videos.length > 0) {
     content = videos.map((video) => (
       <Link to={`/player/${video.id}`}>
-        <ListItem>
+        <ListItem className={videoId == video.id && `playing`}>
           <ListItemAvatar>
             <Avatar>
               <NotStartedIcon />

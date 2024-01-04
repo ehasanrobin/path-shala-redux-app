@@ -10,6 +10,8 @@ const PublicRoute = ({ children }) => {
   const { data: videos, isLoading, isError } = useGetVideosQuery();
   const [isAuthCheck, setisAuthCheck] = useState(false);
 
+  console.log(videos);
+
   useEffect(() => {
     const authorization = async () => {
       await auth;
@@ -24,7 +26,7 @@ const PublicRoute = ({ children }) => {
   return (
     <>
       {auth?.accessToken ? (
-        <Navigate to={`/player/${videos[0].id}`}></Navigate>
+        <Navigate to={`/player/${videos[0]?.id}`}></Navigate>
       ) : (
         children
       )}

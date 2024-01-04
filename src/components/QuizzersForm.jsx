@@ -17,7 +17,7 @@ const QuizzersForm = ({ videoId }) => {
     content = <div>No quizzers Found</div>;
   } else if (!isLoading && !isError && quizzers.length > 0) {
     content = quizzers.map((quizz) => (
-      <FormGroup>
+      <FormGroup className="quizz-box">
         <h3 className="text-2xl text-blue-600 capitalize">{quizz.question}</h3>
         <div className="grid grid-cols-2 gap-3 mt-2">
           {quizz.options.map((option) => (

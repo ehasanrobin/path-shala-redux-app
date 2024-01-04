@@ -48,7 +48,6 @@ const Player = () => {
   const handleClose = () => setOpen(false);
   const { videoId } = useParams();
   const { data: video } = useGetVideoQuery(videoId);
-  console.log(videoId);
 
   return (
     <div className="w-full">
@@ -91,7 +90,7 @@ const Player = () => {
             <Grid item xs={12} md={12}>
               <Demo>
                 <List dense={dense} className="video-list">
-                  {<VideosList></VideosList>}
+                  {<VideosList videoId={videoId}></VideosList>}
                 </List>
               </Demo>
             </Grid>
@@ -107,7 +106,7 @@ const Player = () => {
       >
         <Box sx={style}>
           <form action="">
-            <h3 className="video-title font-bold">video title</h3>
+            <h3 className="video-title font-bold">{video?.title}</h3>
             <QuizzersForm videoId={videoId}></QuizzersForm>
           </form>
         </Box>

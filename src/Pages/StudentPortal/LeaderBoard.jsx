@@ -69,32 +69,26 @@ const LeaderBoard = () => {
                     <StyledTableCell component="th" scope="row">
                       {row.name}
                     </StyledTableCell>
-                    <StyledTableCell align="right">
-                      {row.calories}
-                    </StyledTableCell>
-                    <StyledTableCell align="right">{row.fat}</StyledTableCell>
-                    <StyledTableCell align="right">{row.carbs}</StyledTableCell>
-                    <StyledTableCell align="right">
-                      {row.protein}
-                    </StyledTableCell>
+                    <StyledTableCell>{row.calories}</StyledTableCell>
+                    <StyledTableCell>{row.fat}</StyledTableCell>
+                    <StyledTableCell>{row.carbs}</StyledTableCell>
+                    <StyledTableCell>{row.protein}</StyledTableCell>
                   </StyledTableRow>
                 ))}
               </TableBody>
             </Table>
           </TableContainer>
         </div>
-        <h1>list of student for the leaderboard</h1>
+        <h1 className="text-3xl mt-4 mb-1">Top 20 Results</h1>
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 700 }} aria-label="customized table">
             <TableHead>
               <TableRow>
-                <StyledTableCell>Dessert (100g serving)</StyledTableCell>
-                <StyledTableCell align="right">Calories</StyledTableCell>
-                <StyledTableCell align="right">Fat&nbsp;(g)</StyledTableCell>
-                <StyledTableCell align="right">Carbs&nbsp;(g)</StyledTableCell>
-                <StyledTableCell align="right">
-                  Protein&nbsp;(g)
-                </StyledTableCell>
+                <StyledTableCell>Rank</StyledTableCell>
+                <StyledTableCell>Name</StyledTableCell>
+                <StyledTableCell>Quizz Mark</StyledTableCell>
+                <StyledTableCell>Assignment Mark</StyledTableCell>
+                <StyledTableCell>Total</StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -103,12 +97,10 @@ const LeaderBoard = () => {
                   <StyledTableCell component="th" scope="row">
                     {row.name}
                   </StyledTableCell>
-                  <StyledTableCell align="right">
-                    {row.calories}
-                  </StyledTableCell>
-                  <StyledTableCell align="right">{row.fat}</StyledTableCell>
-                  <StyledTableCell align="right">{row.carbs}</StyledTableCell>
-                  <StyledTableCell align="right">{row.protein}</StyledTableCell>
+                  <StyledTableCell>{row.calories}</StyledTableCell>
+                  <StyledTableCell>{row.fat}</StyledTableCell>
+                  <StyledTableCell>{row.carbs}</StyledTableCell>
+                  <StyledTableCell>{row.protein}</StyledTableCell>
                 </StyledTableRow>
               ))}
             </TableBody>

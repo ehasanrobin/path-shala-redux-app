@@ -8,6 +8,8 @@ import LeaderBoard from "./Pages/StudentPortal/LeaderBoard";
 import Login from "./Pages/StudentPortal/Login";
 import Player from "./Pages/StudentPortal/Player";
 import Register from "./Pages/StudentPortal/Register";
+import A_Dashboard from "./components/A_Dashboard";
+import A_PublicRoute from "./components/A_PublicRoute";
 import PrivateRoute from "./components/PrivateRoute";
 import PublicRoute from "./components/PublicRoute";
 import { useAuth } from "./hooks/useAuth";
@@ -42,7 +44,15 @@ function App() {
           }
         ></Route>
         <Route path="/leaderboard" element={<LeaderBoard />}></Route>
-        <Route path="/admin/login" element={<AdminLogin />}></Route>
+        <Route
+          path="/admin/login"
+          element={
+            <A_PublicRoute>
+              <AdminLogin />
+            </A_PublicRoute>
+          }
+        ></Route>
+        <Route path="/admin/dashboard" element={<A_Dashboard />}></Route>
         <Route path="/admin/assignments" element={<Assignments />}></Route>
         <Route path="/admin/quizzers" element={<Quizzers />}></Route>
       </Routes>
