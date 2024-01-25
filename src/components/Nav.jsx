@@ -45,7 +45,6 @@ function Nav() {
 
   // ui actions
   const logOut = () => {
-    console.log("logout");
     signOut(auth).then(() => {
       dispatch(userloggedOut());
     });

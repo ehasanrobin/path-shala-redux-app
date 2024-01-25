@@ -75,3 +75,8 @@ button.MuiButtonBase-root.MuiButton-root.MuiButton-text.MuiButton-textPrimary.Mu
   box-shadow: 1px 1px 1px 1px #ddd;
   margin-bottom: 30px;
 }
+section.dashboard-section {
+  display: flex;
+  align-items: center;
+  height: calc(100vh - 100px);
+}

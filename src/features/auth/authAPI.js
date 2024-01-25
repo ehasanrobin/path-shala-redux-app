@@ -3,6 +3,14 @@ import { userloggedin } from "./authSlice";
 
 const authAPI = apiSlice.injectEndpoints({
   endpoints: (build) => ({
+    getUsers: build.query({
+      query: ({ email, role }) => `/users?email=${email}&role=${role}`,
+    }),
+    addUsers: build.mutation((data) => ({
+      url: "/users",
+      method: "POST",
+      body: data,
+    })),
     adminLogin: build.mutation({
       query: (data) => ({
         url: "/login",
@@ -29,4 +37,5 @@ const authAPI = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useAdminLoginMutation } = authAPI;
+export const { useAdminLoginMutation, useGetUsersQuery, useAddUsersMutation } =
+  authAPI;

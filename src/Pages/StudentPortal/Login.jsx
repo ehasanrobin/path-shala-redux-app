@@ -7,6 +7,8 @@ import { Link, useNavigate } from "react-router-dom";
 import banner from "../../assets/img/login-banner.jpg";
 import logo from "../../assets/img/logo.png";
 import Error from "../../components/Error";
+import { apiSlice } from "../../features/api/apiSlice";
+import { useAddUsersMutation } from "../../features/auth/authAPI";
 import { loggedinasync, userloggedin } from "../../features/auth/authSlice";
 import { auth } from "../../firebase/firebase.init";
 const Login = () => {
@@ -16,6 +18,9 @@ const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const googleProvider = new GoogleAuthProvider();
+  const [addUser, { data }] = useAddUsersMutation();
+
+  console.log(data);
 
   const handlesubmit = (e) => {
     e.preventDefault();
@@ -47,11 +52,37 @@ const Login = () => {
   };
   const handleGoogleLogin = () => {
     signInWithPopup(auth, googleProvider)
-      .then((result) => {
+      .then(async (result) => {
         // This gives you a Google Access Token. You can use it to access the Google API.
         const credential = GoogleAuthProvider.credentialFromResult(result);
         const accessToken = credential.accessToken;
-        console.log(result);
+        // const userExists = await useGetUsersQuery(credential.user.email);
+        const existingUser = dispatch(
+          apiSlice.endpoints.getUsers.initiate({
+            email: result.user.email,
+            role: "student",
+          })
+        )
+          .unwrap()
+          .then((result1) => {
+            if (result1.length === 0) {
+              console.log({
+                email: result.user.email,
+                displayName: result.user.displayName,
+                photoURL: result.user.photoURL,
+                password: "",
+                role: "student",
+              });
+              addUser({
+                email: result.user.email,
+                displayName: result.user.displayName,
+                photoURL: result.user.photoURL,
+                password: "",
+                role: "student",
+              });
+            }
+          });
+
         dispatch(
           userloggedin({
             accessToken,

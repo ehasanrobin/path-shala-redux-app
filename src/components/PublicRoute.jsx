@@ -10,8 +10,6 @@ const PublicRoute = ({ children }) => {
   const { data: videos, isLoading, isError } = useGetVideosQuery();
   const [isAuthCheck, setisAuthCheck] = useState(false);
 
-  console.log(videos);
-
   useEffect(() => {
     const authorization = async () => {
       await auth;

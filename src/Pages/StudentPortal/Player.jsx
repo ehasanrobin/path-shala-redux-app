@@ -64,21 +64,23 @@ const Player = () => {
           ></iframe>
           <div className="video-content p-6">
             <Divider variant="middle " />
-            <Button
-              variant="contained"
-              color="secondary"
-              className="mt-3 block video-project-button shadow-lg"
-            >
-              assignment
-            </Button>
-            <Button
-              onClick={handleOpen}
-              variant="contained"
-              color="secondary"
-              className="mt-3 block video-project-button shadow-lg"
-            >
-              quizz
-            </Button>
+            <div className="flex">
+              <Button
+                variant="contained"
+                color="secondary"
+                className="mt-3 block  video-project-button shadow-lg bg-purple-800"
+              >
+                assignment
+              </Button>
+              <Button
+                onClick={handleOpen}
+                variant="contained"
+                color="secondary"
+                className="mt-3 block bg-purple-800 video-project-button shadow-lg"
+              >
+                quizz
+              </Button>
+            </div>
 
             <Divider variant="middle" />
             <h1 className="text-4xl font-bold video-title">{video?.title}</h1>
