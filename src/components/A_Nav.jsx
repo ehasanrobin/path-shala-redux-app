@@ -14,6 +14,10 @@ import Typography from "@mui/material/Typography";
 import * as React from "react";
 import { Link } from "react-router-dom";
 import logo from "../assets/img/logo.png";
+import { signOut } from "firebase/auth";
+import { auth } from "../firebase/firebase.init";
+import { useDispatch } from "react-redux";
+import { userloggedOut } from "../features/auth/authSlice";
 
 const pages = [
   { title: "Leader Board", url: "leaderboard" },
@@ -27,6 +31,7 @@ const settings = ["Profile", "Account", "Dashboard", "Logout"];
 function A_Nav() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const dispatch = useDispatch();
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -43,6 +48,11 @@ function A_Nav() {
     setAnchorElUser(null);
   };
 
+  // ui actions loggedout
+  const logOut = () => {
+    dispatch(userloggedOut());
+    localStorage.removeItem("Authorization");
+  };
   return (
     <AppBar position="static" className="bg-slate-800 navbar">
       <Container maxWidth="xl">
@@ -161,7 +171,12 @@ function A_Nav() {
             >
               {settings.map((setting) => (
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
+                  <Typography
+                    textAlign="center"
+                    onClick={setting === "Logout" && logOut}
+                  >
+                    {setting}
+                  </Typography>
                 </MenuItem>
               ))}
             </Menu>

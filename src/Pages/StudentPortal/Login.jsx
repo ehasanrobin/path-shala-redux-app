@@ -77,7 +77,7 @@ const Login = () => {
                 email: result.user.email,
                 displayName: result.user.displayName,
                 photoURL: result.user.photoURL,
-                password: "",
+                password: "123456",
                 role: "student",
               });
             }

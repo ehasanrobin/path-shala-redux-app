@@ -88,7 +88,7 @@ const Player = () => {
           </div>
         </div>
         <div className="w-2/5">
-          <Grid container spacing={2} className="bg-transparent">
+          <Grid container spacing={2} className="bg-transparent rounded-full">
             <Grid item xs={12} md={12}>
               <Demo>
                 <List dense={dense} className="video-list">

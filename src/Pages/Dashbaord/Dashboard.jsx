@@ -4,9 +4,11 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import React from "react";
 import { Link } from "react-router-dom";
-import { useGetVideosQuery } from "../../features/videos/videosAPI";
 import A_Nav from "../../components/A_Nav";
+import { useGetAssignmentsQuery } from "../../features/assignments/assignmentsAPI";
 import { useGetAllQuizzersQuery } from "../../features/quizzers/quizzersAPI";
+import { useGetVideosQuery } from "../../features/videos/videosAPI";
+import { useGetStudentsQuery } from "../../features/students/studentsSlice";
 
 const bull = (
   <Box
@@ -19,6 +21,8 @@ const bull = (
 const Dashboard = () => {
   const { data: videos, isLoading, isError } = useGetVideosQuery();
   const { data: quizzes } = useGetAllQuizzersQuery();
+  const { data: assignments } = useGetAssignmentsQuery();
+  const { data: students } = useGetStudentsQuery();
   return (
     <>
       <A_Nav></A_Nav>
@@ -30,7 +34,11 @@ const Dashboard = () => {
                 <Typography variant="h5" component="div">
                   Total Videos
                 </Typography>
-                <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                <Typography
+                  sx={{ mb: 1.5 }}
+                  className="text-4xl"
+                  color="text.secondary"
+                >
                   {videos?.length > 0 ? videos.length : 0}
                 </Typography>
               </CardContent>
@@ -43,7 +51,11 @@ const Dashboard = () => {
                 <Typography variant="h5" component="div">
                   Total Quizzes
                 </Typography>
-                <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                <Typography
+                  className="text-4xl"
+                  sx={{ mb: 1.5 }}
+                  color="text.secondary"
+                >
                   {quizzes?.length > 0 ? videos.length : 0}
                 </Typography>
               </CardContent>
@@ -54,23 +66,14 @@ const Dashboard = () => {
             <Card sx={{ minWidth: 275 }}>
               <CardContent>
                 <Typography variant="h5" component="div">
-                  Total Videos
+                  Total Assignments
                 </Typography>
-                <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                  10
-                </Typography>
-              </CardContent>
-            </Card>
-          </Link>
-          {/* <!-- ... --> */}
-          <Link to={""}>
-            <Card sx={{ minWidth: 275 }}>
-              <CardContent>
-                <Typography variant="h5" component="div">
-                  Total Videos
-                </Typography>
-                <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                  10
+                <Typography
+                  sx={{ mb: 1.5 }}
+                  className="text-4xl"
+                  color="text.secondary"
+                >
+                  {assignments?.length > 0 ? assignments.length : 0}
                 </Typography>
               </CardContent>
             </Card>
@@ -80,23 +83,14 @@ const Dashboard = () => {
             <Card sx={{ minWidth: 275 }}>
               <CardContent>
                 <Typography variant="h5" component="div">
-                  Total Videos
+                  Total Students
                 </Typography>
-                <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                  10
-                </Typography>
-              </CardContent>
-            </Card>
-          </Link>
-          {/* <!-- ... --> */}
-          <Link to={""}>
-            <Card sx={{ minWidth: 275 }}>
-              <CardContent>
-                <Typography variant="h5" component="div">
-                  Total Videos
-                </Typography>
-                <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                  10
+                <Typography
+                  sx={{ mb: 1.5 }}
+                  className="text-4xl"
+                  color="text.secondary"
+                >
+                  {students?.length > 0 ? students.length : 0}
                 </Typography>
               </CardContent>
             </Card>

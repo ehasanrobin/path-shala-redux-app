@@ -48,8 +48,8 @@ const VideosList = ({ videoId }) => {
     content = <div>No videos Found</div>;
   } else if (!isLoading && !isError && videos.length > 0) {
     content = videos.map((video) => (
-      <Link to={`/player/${video.id}`}>
-        <ListItem className={videoId == video.id && `playing`}>
+      <Link to={`/player/${video.id}`} className="mt-3">
+        <ListItem className={`${videoId == video.id && `playing`} rounded-md`}>
           <ListItemAvatar>
             <Avatar>
               <NotStartedIcon />

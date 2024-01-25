@@ -13,6 +13,7 @@ import PrivateRoute from "./components/PrivateRoute";
 import PublicRoute from "./components/PublicRoute";
 import { useAuth } from "./hooks/useAuth";
 import Dashboard from "./Pages/Dashbaord/Dashboard";
+import A_PrivateRoute from "./components/A_PrivateRoute";
 
 function App() {
   const auth = useAuth();
@@ -55,7 +56,14 @@ function App() {
               </A_PublicRoute>
             }
           ></Route>
-          <Route path="/admin/dashboard" element={<Dashboard />}></Route>
+          <Route
+            path="/admin/dashboard"
+            element={
+              <A_PrivateRoute>
+                <Dashboard />
+              </A_PrivateRoute>
+            }
+          ></Route>
           <Route path="/admin/assignments" element={<Assignments />}></Route>
           <Route path="/admin/quizzers" element={<Quizzers />}></Route>
         </Routes>
